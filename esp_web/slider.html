@@ -1,0 +1,67 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="main.css">
+    </head>
+    <body>
+        <div class="container">
+            <div class="stateContainer">
+                <h3>LED</h3>
+                <div id="neoPixelOuter">
+                    <div id="neoPixelInner"></div>
+                </div>
+            </div>
+            <div class="slidecontainer">
+                <div class="form-row"><span class="color-box"></span><input type="range" min="0" max="255" value="50" class="slider" id="r" autocomplete="off"></div>
+                <div class="form-row"><span class="color-box"></span><input type="range" min="0" max="255" value="50" class="slider" id="g" autocomplete="off"></div>
+                <div class="form-row"><span class="color-box"></span><input type="range" min="0" max="255" value="50" class="slider" id="b" autocomplete="off"></div>
+            </div>
+        </div>
+        <script>
+        // wait until page is loaded
+        document.addEventListener('DOMContentLoaded', initPage);
+
+        // array variable to hold the sliders
+        let sliders = [];
+
+        // header parameters for the fetch command
+        const params = {
+            headers: { "content-type": "text/plain" },
+            method: "POST"
+        }
+
+        function initPage() 
+        {
+            // put all of the slides in an array for easy reference
+            sliders = document.querySelectorAll('input[type=range]');
+
+            // loop through each slider and add an event for when the change
+            sliders.forEach(el => {
+                el.addEventListener('change', doColors);
+            });
+
+            // send the initial color to the Blynk Board
+            doColors();
+        }
+
+        function doColors() 
+        {
+            // construct the css color based onthe values from each slider
+            const color = `rgb(${sliders[0].value},${sliders[1].value},${sliders[2].value})`;
+            console.log(color);
+
+            // set the background color of the element on the page to the color set with the sliders
+            document.querySelector('#neoPixelInner').style.backgroundColor = color;
+
+            // set the background color of each slider's thumbnail
+            sliders[0].parentNode.querySelector('.color-box').style.backgroundColor = `rgb(${sliders[0].value},0,0)`;
+            sliders[1].parentNode.querySelector('.color-box').style.backgroundColor = `rgb(0,${sliders[1].value},0)`;
+            sliders[2].parentNode.querySelector('.color-box').style.backgroundColor = `rgb(0,0,${sliders[2].value})`;
+
+            // send a request to the Blynk Board with teh values from the sliders
+            // then print the string returned from the Blynk Board to the developers sconsole
+            fetch(`http://blynkboard.local/pixel?r=${sliders[0].value}&g=${sliders[1].value}&b=${sliders[2].value}`)
+                .then(res => console.log(res) );
+        }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,62 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="main.css">
+    </head>
+    <body>
+        <div class="container">
+            <div class="stateContainer">
+                <h3>LED is: <span id="ledState" class="off">OFF</span></h3>
+                <label class="switch">
+                    <input type="checkbox" id="ledSwitch" autocomplete="off">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <script>
+            // wait until page is loaded
+            document.addEventListener('DOMContentLoaded', initPage);
+
+            // set variable to keep track of led state locally
+            let ledState = 0;
+
+            // header for http request
+            const params = {
+                headers: { "content-type": "text/plain" },
+                method: "POST"
+            }
+
+            function initPage() 
+            {
+                // add event to detect when slider has changed
+                document.querySelector('#ledSwitch').addEventListener('change', handleChange);
+
+                // set the slider to false (this is for when the page is reloaded)
+                document.querySelector('#ledSwitch').attributes['checked'] = false;
+            }
+
+            function handleChange() 
+            {
+                // determine current state of led and set the path variable 
+                let path = ledState ? 'off' : 'on';
+
+                // send a request to the microcontroller using the path variable above
+                // change the address to what was set in the MDNS function in the Arduino sketch
+                fetch(`http://esp32.local/${path}`, params);
+
+                // change the slider visual on the web page
+                if (ledState) 
+                {
+                    document.querySelector('#ledSwitch').attributes['checked'] = ledState = 0;
+                    document.querySelector('#ledState').textContent = 'OFF';
+                    document.querySelector('#ledState').className = 'off';
+                }
+                else 
+                {
+                    document.querySelector('#ledSwitch').attributes['checked'] = ledState = 1;
+                    document.querySelector('#ledState').textContent = 'ON';
+                    document.querySelector('#ledState').className = 'on';
+                }
+            }
+        </script>
+    </body>
+</html>

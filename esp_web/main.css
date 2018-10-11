@@ -1,0 +1,127 @@
+html,body {
+    font-family: Arial,Helvetica,sans-serif;
+}
+
+.container {
+    width: 20%;
+    margin: 10px auto;
+    border: 1px solid #333333;
+    border-radius: 10px;
+}
+
+.stateContainer {
+    display: flex;
+    justify-content: space-between;
+    
+    padding: 5px 20px;
+    color: #ffffff;
+    background: #959595;
+    border: 1px solid #666666;
+    border-radius: 10px 10px 0 0;
+}
+
+#ledState.on { color: rgb(40, 243, 33); }
+#ledState.off { color: rgb(223, 217, 217); }
+
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    vertical-align: middle;
+    margin: 10px 0;
+    padding: 10px;
+    border-bottom: 1px solid #cccccc;
+}
+
+.form-row:last-child {
+    border: none;
+}
+
+.form-row input {
+    width: 70%;
+    margin-top: 10px;
+}
+
+.color-box {
+    display: inline-flex;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #333333;
+}
+
+#neoPixelOuter {
+    width: 50px;
+    height: 50px;
+    background: #ffffff;
+    border: 1px solid #000000;
+}
+
+#neoPixelInner {
+    width: 45px;
+    height: 45px;
+    margin: 2px;
+    border: 1px solid #cccccc;
+    border-radius: 50px;
+}
+
+
+/* -------------------------------------- */
+/* The switch - the box around the slider */
+/* -------------------------------------- */
+.switch {
+  position: relative;
+  display: inline-flex;
+  width: 60px;
+  height: 30px;
+  margin-top: 12px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {display:none;}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 34px;
+  width: 34px;
+  left: 0px;
+  top: -2px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: rgb(40, 243, 33);
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(32px);
+  -ms-transform: translateX(32px);
+  transform: translateX(32px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+} 
